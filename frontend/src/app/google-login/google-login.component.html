@@ -1,0 +1,17 @@
+<div>
+  <div *ngIf="!isLoggedIn">
+    <button nbButton status="primary" (click)="signInWithGoogle()" fullWidth>
+      login with google
+    </button>
+  </div>
+
+  <div *ngIf="isLoggedIn">
+    <img src="{{user?.photoUrl}}" referrerpolicy="no-referrer">
+    <h2>Welcome {{user?.name}}</h2>
+    <div>
+      <button nbButton status="primary" (click)="signOut()">
+        logout
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,12 @@
 <nb-layout>
   <nb-layout-header fixed>
-    <h3>Chat App</h3>
+    <div class="flex-container space-between">
+      <h3>Chat App</h3>
+
+      <div>
+        <button (click)="logout()" nbButton>Logout</button>
+      </div>
+    </div>
   </nb-layout-header>
 
   <nb-layout-column>

@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn) {
+    if (this.authService.loggedInWithGoogle) {
       this.router.navigate(['chat'])
     }
   }
