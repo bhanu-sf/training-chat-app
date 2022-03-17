@@ -4,7 +4,7 @@
       <h3>Chat App</h3>
 
       <div>
-        <button (click)="logout()" nbButton>Logout</button>
+        <button *ngIf="authService.isLoggedIn" (click)="logout()" nbButton>Logout</button>
       </div>
     </div>
   </nb-layout-header>

@@ -6,11 +6,7 @@ import { GoogleLoginProvider, SocialAuthService, SocialUser } from "angularx-soc
   providedIn: 'root'
 })
 export class AuthService {
-
-  user: SocialUser | null = null;
-  loggedInWithGoogle: boolean = false;
-
-  constructor(private router: Router, private googleAuthService: SocialAuthService) { }
+  constructor(private router: Router) { }
 
   get isLoggedIn(): boolean {
     const token = localStorage.getItem('token');
