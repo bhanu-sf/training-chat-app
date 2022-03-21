@@ -40,7 +40,8 @@
     "docker:push": "sudo docker push $IMAGE_REPO_NAME/sl-bhanu-training-auth-$npm_package_name:$npm_package_version",
     "docker:build:dev": "DOCKER_BUILDKIT=1 sudo docker build --build-arg NR_ENABLED=$NR_ENABLED_VALUE -t $IMAGE_REPO_NAME/\n    sl-bhanu-training-auth-$npm_package_name:$IMAGE_TAG_VERSION .",
     "docker:push:dev": "sudo docker push $IMAGE_REPO_NAME/sl-bhanu-training-auth-$npm_package_name:$IMAGE_TAG_VERSION",
-    "coverage": "nyc npm run test"
+    "coverage": "nyc npm run test",
+    "dev": "nodemon --watch src -e ts --exec \"npm run start\""
   },
   "repository": {
     "type": "git",

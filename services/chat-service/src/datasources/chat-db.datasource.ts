@@ -9,7 +9,8 @@ const config = {
   port: 5432,
   user: 'admin',
   password: 'password',
-  database: 'chat'
+  database: 'chat',
+  schema: 'main',
 };
 
 // Observe application's life cycle to disconnect the datasource when

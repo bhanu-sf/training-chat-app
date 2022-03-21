@@ -1485,6 +1485,23 @@
         "operationId": "PingController.ping"
       }
     },
+    "/profile": {
+      "get": {
+        "x-controller-name": "ProfileController",
+        "x-operation-name": "getProfile",
+        "tags": [
+          "ProfileController"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Return value of ProfileController.getProfile",
+            "content": {}
+          }
+        },
+        "operationId": "ProfileController.getProfile"
+      }
+    },
     "/": {
       "get": {
         "x-controller-name": "HomePageController",
