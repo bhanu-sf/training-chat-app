@@ -9,6 +9,7 @@ export interface Auth {
 
   login(body: any): Promise<any>;
   getAuthToken(body: any): Promise<any>;
+  getProfile(token: any): Promise<any>;
 }
 
 export class AuthProvider implements Provider<Auth> {

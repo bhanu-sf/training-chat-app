@@ -30,6 +30,18 @@
       "functions": {
         "getAuthToken": ["data"]
       }
+    },
+    {
+      "template": {
+        "method": "GET",
+        "url": "/auth/me",
+        "headers": {
+          "Authorization": "{token}"
+        }
+      },
+      "functions": {
+        "getProfile": ["token"]
+      }
     }
   ]
 }

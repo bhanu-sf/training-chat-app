@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { GoogleLoginProvider, SocialAuthService, SocialUser } from "angularx-social-login";
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +8,13 @@ export class AuthService {
   constructor(private router: Router) { }
 
   get isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
     return !!token;
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     this.router.navigate(['login']);
   }
 }

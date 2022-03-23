@@ -1,5 +1,5 @@
 import {inject} from '@loopback/core';
-import { get, param } from '@loopback/rest';
+import { get, param, post, requestBody } from '@loopback/rest';
 import { ChatService } from '../services';
 
 export class ChatController {
@@ -16,4 +16,11 @@ export class ChatController {
     return this.chatService.getMessages(token);
   }
 
+  @post('/messages')
+  async login(
+    @param.header.string('Authorization') token: string,
+    @requestBody() body: any
+  ) {
+    return this.chatService.createMessage(body, token);
+  }
 }

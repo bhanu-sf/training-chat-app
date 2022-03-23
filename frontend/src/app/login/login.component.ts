@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { mergeMap } from 'rxjs';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -27,15 +28,19 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.http
-      .post('http://localhost:3000/auth/login', {
+    this.http.post('http://localhost:3000/auth/login', {
         username: this.username,
         password: this.password,
         client_id: '1001',
-        client_secret: 'thisisclientsccret',
-      })
-      .subscribe((res: any) => {
-        localStorage.setItem('token', res.code);
+        client_secret: 'thisisclientsecret',
+      }).pipe(
+        mergeMap((res: any) => this.http.post('http://localhost:3000/auth/token', {
+          code: res.code,
+          clientId: '1001'
+        }))
+      ).subscribe((res: any) => {
+        localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
         this.router.navigate(['chat']);
       });
   }
