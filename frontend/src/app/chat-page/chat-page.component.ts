@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { mergeMap } from 'rxjs';
 import { ChatService } from './chat.service';
+import * as moment from 'moment';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat-page',
@@ -18,7 +20,7 @@ export class ChatPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.http
-      .get('http://localhost:3000/auth/me', {
+      .get(`${environment.baseUrl}/auth/me`, {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
         },
@@ -28,25 +30,26 @@ export class ChatPageComponent implements OnInit {
           this.user = res;
           localStorage.setItem('userTenantId', res.userTenantId);
           console.log(res);
-          return this.http.get('http://localhost:3000/messages', {
+          return this.http.get(`${environment.baseUrl}/messages`, {
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
             },
           });
         })
-      ).subscribe((res) => {
+      )
+      .subscribe((res) => {
         console.log(res);
         let data = res as any[];
         this.messages = data.map((v) => {
           console.log(v);
           return {
             text: v.body,
-            date: new Date(),
-            reply: this.user.userTenantId !== v.modifiedBy,
+            date: moment(v.createdOn).toDate(),
+            reply: this.user.userTenantId === v.modifiedBy,
             type: 'text',
             // files: files,
             user: {
-              name: 'Jonh Doe',
+              name: this.user.userTenantId === v.modifiedBy ? this.user?.firstName : 'Jon Doe',
               avatar: 'https://i.gifer.com/no.gif',
             },
           };
@@ -71,7 +74,7 @@ export class ChatPageComponent implements OnInit {
 
     this.http
       .post(
-        'http://localhost:3000/messages',
+        `${environment.baseUrl}/messages`,
         {
           body: event.message,
           channelId: '91e9607f-2dbc-4ac3-91e4-f1824c39d070',
@@ -84,14 +87,17 @@ export class ChatPageComponent implements OnInit {
           },
         }
       )
-      .subscribe((res) => {
-        console.log(res);
+      .subscribe((v: any) => {
+        this.messages.push({
+          text: v.body,
+          date: moment(v.createdOn).toDate(),
+          reply: this.user.userTenantId === v.modifiedBy,
+          type: 'text',
+          user: {
+            name: this.user.userTenantId === v.modifiedBy ? this.user?.firstName : 'Jon Doe',
+            avatar: 'https://i.gifer.com/no.gif',
+          },
+        });
       });
-    const botReply = this.chatService.reply(event.message);
-    if (botReply) {
-      setTimeout(() => {
-        this.messages.push(botReply);
-      }, 500);
-    }
   }
 }
